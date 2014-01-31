@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{Title}</title>
+        <link rel="shortcut icon" href="{Favicon}">
+        <link rel="alternate" type="application/rss+xml" href="{RSS}">
+        {block:Description}
+            <meta name="description" content="{MetaDescription}" />
+        {/block:Description}
+        <link href='http://static.tumblr.com/twte3d7/DHIm5wmgi/stylesheet.css' rel='stylesheet' type='text/css'>
+        
+        <meta name="color:Background" content="#FFFFFF" />
+        <meta name="color:Text" content="#252525" />
+        <meta name="image:Background" content=""/>
+
+        <style type="text/css">
+            body 
+            {
+                background-color:{color:Background};
+                background-image:url({image:Background});
+                background-attachment: fixed;
+                background-size: cover;
+                color:{color:Text};
+                line-height:25px;
+            }
+            a {
+                padding-bottom:2px;
+                color:{color:Text};
+                text-decoration:none;
+            }
+            img {
+                border: none;
+                border: 0;
+                outline: none;
+            }
+            a img {
+                outline: none;
+            }
+            #post
+            {
+                padding: 120px;
+            }
+            #post embed, #post iframe {
+                width:100% !important;
+            }
+            .my-photoset img {
+                display:none !important;
+            }
+            .my-photoset img:first-child {
+                display:block !important;
+                border:0 !important;
+                padding:0 !important;
+            }
+            
+            #wrapper {
+                {block:PermalinkPage}
+                width:580px;
+                {/block:PermalinkPage}
+                position:relative;
+                margin:50px auto;
+            }            
+        {CustomCSS}
+        </style>
+    </head>
+    <body>
+        <h1><p align="right"><big>{Title}</p></big></h1>
+        <h2><i><p align="right">{Description}</p></i></h2>
+        <ul id="posts">
+{block:Posts}
+
+<p></p>
+
+{block:Text}
+    <li class="post text">
+        {block:Title}
+            <h3><a href="{Permalink}">{Title}</a></h3>
+        {/block:Title}{Body}
+    </li>
+{/block:Text}
+
+<p></p>            
+
+{block:Photo}
+    <li class="post photo">
+    {block:IndexPage}
+        <a href="{Permalink}"><img src="{PhotoURL-500}" alt="{PhotoAlt}"/></a>
+    {/block:IndexPage}
+    {block:PermalinkPage}
+        {LinkOpenTag}
+            <a href="{Permalink}"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/></a>
+        {LinkCloseTag}
+        {block:Caption}
+            {Caption}
+        {/block:Caption}
+    {/block:PermalinkPage}
+    </li>
+{/block:Photo}
+
+<p></p>
+
+{block:Photoset}
+    <li class="my-photoset">
+        {block:Photos}
+            <img src="{PhotoURL-500}" border="0" />
+        {/block:Photos}
+    </li>
+{/block:Photoset}
+
+<p></p>
+
+{block:Quote}
+    <li class="post quote">
+        "{Quote}"
+            {block:Source}
+                <br><i>&mdash; {Source}</i></br>
+            {/block:Source}
+    </li>
+{/block:Quote}
+
+<p></p>             
+
+{block:Link}
+    <li class="post link">
+        <a href="{URL}" class="link" {Target}>{Name}</a>
+    {block:Description}
+                <div class="description">{Description}</div>
+    {/block:Description}
+    </li>
+{/block:Link}
+
+<p></p>
+
+{block:Chat}
+    <li class="post chat">
+        {block:Title}
+            <h3><a href="{Permalink}">{Title}</a></h3>
+        {/block:Title}
+            <ul class="chat">
+        {block:Lines}
+            <li class="{Alt} user_{UserNumber}">
+                {block:Label}
+                    <span class="label">{Label}</span>
+                {/block:Label}{Line}
+            </li>
+        {/block:Lines}
+            </ul>
+    </li>
+{/block:Chat}
+
+<p></p>
+
+{block:Video}
+    <li class="post video">
+        {Video-500}
+        {block:Caption}
+    <div class="caption">{Caption}</div>
+        {/block:Caption}
+    </li>
+{/block:Video}
+
+<p></p>          
+
+{block:Audio}
+    <li class="post audio">
+        {block:AlbumArt}
+            <a href="{Permalink}"><img src="{AlbumArtURL}"></a>
+        {/block:AlbumArt}
+    <div class="player">{AudioPlayer}</div>
+        {block:PermalinkPage}
+            {block:Caption}
+                <div class="caption">{Caption}</div>
+            {/block:Caption}
+        {/block:PermalinkPage}
+    </li>
+{/block:Audio}
+
+<p></p>            
+
+{/block:Posts}
+        </ul>
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://static.tumblr.com/iwtk77u/Yhym2yygt/jquery.imagesloaded.min.js"></script>
+<script src="http://static.tumblr.com/wgijwsy/Ebfm2v4gy/jquery.masonry.min.js"></script>
+<script src="http://static.tumblr.com/wgijwsy/u2vm2hxv6/jquery.infinitescroll.min.js"></script>
+<script>
+        (function () {
+        var $tumblelog = $('#content');
+        $tumblelog.infinitescroll({
+            navSelector: ".pagination",
+            nextSelector: ".pagination a:last-child",
+            itemSelector: "article",
+        },
+
+        function (newElements) {
+            var $newElems = $(newElements).css({
+                opacity: 0
+            });
+            $newElems.imagesLoaded(function () {
+                $newElems.animate({
+                    opacity: 1
+                });
+                $tumblelog.masonry('appended', $newElems);
+            });
+        });
+        $tumblelog.imagesLoaded(function () {
+            $tumblelog.masonry({
+                columnWidth: function (containerWidth) {
+                    return containerWidth / 100;
+                }
+            });
+        });
+    })();
+</script>
+    </body>
+</html>
