@@ -3,6 +3,8 @@ blog1.0
 
 intentionally terrible tumblr theme. 
 
+-Version 1.0.3-
+
 _INSTALLATION AND USE_
 
 To install this theme on your current Tumblr blog:
